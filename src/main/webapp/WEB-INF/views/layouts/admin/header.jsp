@@ -1,5 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+    
+    
 <header>
-  <h2>Header Admin</h2>
+	<div class="header"> <h2>Quản lý thiết bị học viện cơ sở</h2> 
+		<a href="/QuanLyThietBi/login">Đăng xuất</a>
+	</div>
+  
 </header>
+    

@@ -13,6 +13,8 @@
 <title>Slide Navbar</title>
 	<link rel="stylesheet" type="text/css" href="slide navbar style.css">
 <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
 <style>
 	* {
     padding: 0;
@@ -127,27 +129,27 @@
 <body>
 	<div class="main">
 
-    <form:form method="POST" action="trang-chu/quan-ly-phong" modelAttribute="loginForm" class="form" id="form-1">
+    <form:form method="POST" action="dang-nhap" modelAttribute="loginForm" class="form" id="form-1">
      
-  
+  		<h2 class="title">Đăng nhập</h2>
       <div class="spacer"></div>
   
     
   
       <div class="form-group">
-        <label for="email" class="form-label">Email</label>
-        <input id="email" name="email" type="text" placeholder="VD: email@domain.com" class="form-control">
-        <form:errors path="email" cssClass="errors" />
+        <label for="email" class="form-label">Tài khoản</label>
+        <input id="email" name="email" required  type="text" placeholder="VD: email@domain.com" class="form-control">
+       
       </div>
   
       <div class="form-group">
         <label for="password" class="form-label">Mật khẩu</label>
-        <input id="password" name="password" type="password" placeholder="Nhập mật khẩu" class="form-control">
-        <form:errors path="password" cssClass="errors" />
+        <input id="password" required  name="password" type="password" placeholder="Nhập mật khẩu" class="form-control">
+        
       </div>
   
     
-  
+  		 <form:errors path="email" cssClass="errors text-danger" style="font-size: 14px"/>
       <button class="form-submit">Đăng nhập</button>
     </form:form>
   

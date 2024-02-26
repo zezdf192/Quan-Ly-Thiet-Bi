@@ -40,7 +40,7 @@
 <body>
 	<div class="sidebar-container">
 		<div class="list-action">
-				<a class="action-item active" href="/QuanLyThietBi/trang-chu/quan-ly-phong"">Quản lý phòng</a>
+				<a class="action-item active" href="/QuanLyThietBi/quan-tri/quan-ly-phong"">Quản lý phòng</a>
 				<a class="action-item" href="/QuanLyThietBi/trang-chu/test">Quản lý thiết bị</a>
 				<a class="action-item" href="/myDoExam">Quản lý nhân viên</a>
 				<a class="action-item" href="/ratings/examId">Lập phiếu mượn</a>

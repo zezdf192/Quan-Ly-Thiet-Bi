@@ -11,7 +11,8 @@ public class MapperPhong implements RowMapper<Phong> {
 	public Phong mapRow(ResultSet rs, int rowNum) throws SQLException {
 		Phong phong = new Phong();
 		phong.setMaPhong(rs.getString("MAPHONG"));
-		phong.setTrangThai(rs.getInt("TRANGTHAI"));
+		phong.setTrangThai(rs.getInt("trangthai"));
+		phong.setTenTinhTrang(rs.getString("TenTinhTrang"));
 		return phong;
 	}
 

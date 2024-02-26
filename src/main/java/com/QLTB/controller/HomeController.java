@@ -17,13 +17,21 @@ public class HomeController {
 	
 	HomeDAO homeDAO;
 	
-	@RequestMapping(value = "/trang-chu/quan-ly-phong", method = RequestMethod.GET)
+	@RequestMapping(value = "/quan-tri/quan-ly-phong", method = RequestMethod.GET)
 	   public ModelAndView homePage() {
-	      ModelAndView mav = new ModelAndView("user/quan-ly-phong");
+	      ModelAndView mav = new ModelAndView("admin/quan-ly-phong/quan-ly-phong");
 	      mav.addObject("phongs", homeDAO.getDataPhong());
 	      
 	      return mav;
 	   }
+	
+	@RequestMapping(value = "/quan-tri/quan-ly-phong/tao-phong", method = RequestMethod.GET)
+	   public ModelAndView taoPhongPage() {
+	      ModelAndView mav = new ModelAndView("admin/quan-ly-phong/tao-phong");
+	      return mav;
+	   }
+	
+	
 	
 	@RequestMapping(value = "/back", method = RequestMethod.GET)
 	   public ModelAndView springMVCPage() {
@@ -31,9 +39,9 @@ public class HomeController {
 	      return mav;
 	   }
 	
-	@RequestMapping(value = "/trang-chu/test", method = RequestMethod.GET)
+	@RequestMapping(value = "/quan-tri/test", method = RequestMethod.GET)
 	   public ModelAndView testPage() {
-	      ModelAndView mav = new ModelAndView("user/test");
+	      ModelAndView mav = new ModelAndView("admin/test");
 	      
 	      
 	      return mav;

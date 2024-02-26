@@ -32,7 +32,7 @@ public class LoginController {
 	      return mav;
 	   }
 	
-	@RequestMapping(value = "/trang-chu/quan-ly-phong", method = RequestMethod.POST)
+	@RequestMapping(value = "dang-nhap", method = RequestMethod.POST)
 	public ModelAndView homePage(@ModelAttribute("loginForm") Account acc, ModelMap model, BindingResult errors,
 	        HttpSession ss) throws IOException {
 
@@ -43,15 +43,15 @@ public class LoginController {
 	    // Your validation and login logic here
 	    String log = loginDAO.loginMethod(email, password);
 	    if(log.equals("Success")) {
-	    	 ModelAndView mav = new ModelAndView("user/quan-ly-phong");
+	    	 ModelAndView mav = new ModelAndView("redirect:	quan-tri/quan-ly-phong");
 	    	 mav.addObject("phongs", homeDAO.getDataPhong());
-	 	    
+	    	 
 	 	    return mav;
 	    }
 
 	    errors.rejectValue("email", "loginForm", log);
 	    ModelAndView mav = new ModelAndView("login");
-	  
+	   
 
 	    return mav;
 	}
