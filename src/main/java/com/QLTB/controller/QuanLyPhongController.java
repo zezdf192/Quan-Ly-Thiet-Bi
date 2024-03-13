@@ -74,8 +74,9 @@ public class QuanLyPhongController {
 		 String[] parts = url.split("/");
 	        
 	     String lastElement = parts[parts.length - 1];
+	   
 	     lastElement = java.net.URLDecoder.decode(lastElement, StandardCharsets.UTF_8);
-	     
+	    
 	     List<Phong> list = new ArrayList<Phong>();
 	     list = phongDAO.getPhong(lastElement);
 	     

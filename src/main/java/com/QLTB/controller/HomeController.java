@@ -9,13 +9,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.QLTB.DAO.HomeDAO;
+import com.QLTB.DAO.NhanVienDAO;
 import com.QLTB.Entity.Phong;
 
 @Controller
 public class HomeController {
 	@Autowired
-	
 	HomeDAO homeDAO;
+	
+	@Autowired
+	NhanVienDAO NvDAO;
 	
 	@RequestMapping(value = "/quan-tri/quan-ly-phong", method = RequestMethod.GET)
 	   public ModelAndView homePage() {
@@ -46,4 +49,11 @@ public class HomeController {
 	      
 	      return mav;
 	   }
+	
+	@RequestMapping(value="/quan-tri/quan-ly-nhanvien", method=RequestMethod.GET)
+	public ModelAndView nhanvienPage() {
+		ModelAndView mav = new ModelAndView("admin/quan-ly-nhanvien/quan-ly-nhanvien");
+		mav.addObject("nhanviens", NvDAO.getAllNhanVien());
+		return mav;
+	}
 }

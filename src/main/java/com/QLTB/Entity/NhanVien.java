@@ -13,11 +13,27 @@ public class NhanVien {
 		super();
 	}
 	
+	
+	
+	public NhanVien(String maNV, String tenNV, String cMND, String email, String sdt, String taiKhoan,
+			int dangLamViec) {
+		super();
+		this.maNV = maNV;
+		this.tenNV = tenNV;
+		CMND = cMND;
+		this.email = email;
+		this.sdt = sdt;
+		this.taiKhoan = taiKhoan;
+		this.dangLamViec = dangLamViec;
+	}
+
+
+
 	public String getMaNV() {
 		return maNV;
 	}
-	public void setMaNV(String maNV) {
-		this.maNV = maNV;
+	public void setMaNV(String maNv) {
+		this.maNV = maNv;
 	}
 	public String getTenNV() {
 		return tenNV;

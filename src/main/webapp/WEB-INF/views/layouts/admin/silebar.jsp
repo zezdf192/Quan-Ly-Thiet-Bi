@@ -42,10 +42,24 @@
 		<div class="list-action">
 				<a class="action-item active" href="/QuanLyThietBi/quan-tri/quan-ly-phong"">Quản lý phòng</a>
 				<a class="action-item" href="/QuanLyThietBi/trang-chu/test">Quản lý thiết bị</a>
-				<a class="action-item" href="/myDoExam">Quản lý nhân viên</a>
+				<a class="action-item" href="/QuanLyThietBi/quan-tri/quan-ly-nhanvien">Quản lý nhân viên</a>
 				<a class="action-item" href="/ratings/examId">Lập phiếu mượn</a>
 				<a class="action-item" href="/ratings/examId">Thống kê phiếu mượn</a>
 		</div>
 	</div>
+	
+	<script type="text/javascript">
+	let elements = document.querySelectorAll(".list-action .action-item");
+    elements.forEach((item) => {
+        item.addEventListener("click", () => {
+            let activeItem = document.querySelector(".list-action .active");
+            if (activeItem) { // Kiểm tra xem có phần tử "active" nào không
+                activeItem.classList.remove("active"); // Loại bỏ lớp "active" từ phần tử hiện tại
+            }
+            item.classList.add("active"); // Thêm lớp "active" cho phần tử được nhấp vào
+        });
+    });
+	</script>
+
 </body>
 </html>
