@@ -18,7 +18,6 @@ public class HomeDAO {
 	@Autowired
 	JdbcTemplate _jdbcTemplate;
 	
-	
 	public List<Phong> getDataPhong() {
 		List<Phong> list = new ArrayList<Phong>();
 		String sql = "select MAPHONG, TenTinhTrang, trangthai from phong join TRANGTHAI on phong.TRANGTHAI = TRANGTHAI.MaTinhTrang";
