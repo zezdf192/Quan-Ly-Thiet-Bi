@@ -1,6 +1,8 @@
 package com.QLTB.controller;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -18,6 +20,8 @@ import com.QLTB.DAO.HomeDAO;
 import com.QLTB.DAO.LoginDAO;
 import com.QLTB.Models.Account;
 
+import sun.awt.SunHints.Value;
+
 @Controller
 
 public class LoginController {
@@ -32,27 +36,39 @@ public class LoginController {
 	      return mav;
 	   }
 	
-	@RequestMapping(value = "dang-nhap", method = RequestMethod.POST)
+	@RequestMapping(value = "login", method = RequestMethod.POST)
 	public ModelAndView homePage(@ModelAttribute("loginForm") Account acc, ModelMap model, BindingResult errors,
 	        HttpSession ss) throws IOException {
 
 	    // You can access email and password directly from the Account object
 	    String email = acc.getEmail();
 	    String password = acc.getPassword();
-
+	   
 	    // Your validation and login logic here
 	    String log = loginDAO.loginMethod(email, password);
-	    if(log.equals("Success")) {
-	    	 ModelAndView mav = new ModelAndView("redirect:	quan-tri/quan-ly-phong");
-	    	 mav.addObject("phongs", homeDAO.getDataPhong());
+	   
+	    List<String> values = Arrays.asList(log.split("%"));
+	   
+	   
+	    if(values.get(0).equals("Success")) {
+	    	ModelAndView mav = null;
+	    	if(values.get(1).equals("admin")) {
+	    		mav = new ModelAndView("redirect:	quan-tri/quan-ly-phong");
+	    		mav.addObject("phongs", homeDAO.getDataPhong());
+	    	}else if(values.get(1).equals("nhanvien")) {
+	    		mav = new ModelAndView("nhanvien/nhanvien");
+	    	}else {
+	    		mav = new ModelAndView("user/user");
+	    	}
+	    	 
+	    	
 	    	 
 	 	    return mav;
 	    }
 
-	    errors.rejectValue("email", "loginForm", log);
+	    errors.rejectValue("email", "loginForm", log);	    
 	    ModelAndView mav = new ModelAndView("login");
-	   
-
+   
 	    return mav;
 	}
 

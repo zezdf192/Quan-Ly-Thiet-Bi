@@ -52,12 +52,12 @@ public class LoginDAO {
 		List<TaiKhoan> list = getTaiKhoan(TK);
 		
 		if(list.size() == 0) {
-			return "Tai khoan khong ton tai, vui long kiem tra lai";
+			return "Tài khoản không tồn tại, vui lòng kiểm tra lại";
 		}else {
 			boolean check  = checkPassword(TK, password);
 			if(check) {
-				return "Success";
-			}else return "Mat khau khong chinh xac";
+				return "Success%"+list.get(0).getLoaiTaiKhoan();
+			}else return "Mật khẩu không chính xác";
 		}
 		
 	}
