@@ -8,8 +8,12 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.QLTB.Entity.CTPhieuMuon;
+import com.QLTB.Entity.MapperPhieuMuon;
 import com.QLTB.Entity.MapperPhong;
+import com.QLTB.Entity.MapperThietBi;
 import com.QLTB.Entity.MapperTrangThai;
+import com.QLTB.Entity.PhieuMuon;
 import com.QLTB.Entity.Phong;
 import com.QLTB.Entity.TaiKhoan;
 import com.QLTB.Entity.ThietBi;
@@ -60,7 +64,7 @@ public class PhongDAO {
 		List<Phong> list = getPhong(maPhong);
 		
 		if(list.size() > 0) {
-			return "Ma phong da ton tai";
+			return "Mã phòng đã tồn tại";
 		}else {
 			String log = themMoiPhong(maPhong);
 			return log;
@@ -82,7 +86,29 @@ public class PhongDAO {
 	    return list.get(0).getMaTinhTrang();
 	}
 	
+	public boolean kiemTraThietBiPhongChuaTra(String maPhong) {
+		List<PhieuMuon> list = new ArrayList<PhieuMuon>();
+		String sql = "select PHIEUMUON.* from CTPHIEUMUON join PHIEUMUON\r\n"
+				+ "on PHIEUMUON.MAPM = CTPHIEUMUON.MAPHIEUMUON\r\n"
+				+ "and PHIEUMUON.MAPHG = ?\r\n"
+				+ "and CTPHIEUMUON.TRANGTHAI = 3";
+		
+		try {
+	    
+	       list = _jdbcTemplate.query(sql, new Object[]{maPhong}, new MapperPhieuMuon());
+	    } catch (DataAccessException e) {
+	       
+	        e.printStackTrace();
+	    }
+		if(list.size() > 0) return true;
+		else return false;
+	}
+	
 	public void thayDoiPhong(String maTinhTrang, String maPhong) {
+		if(maTinhTrang.equals("0")) {
+			boolean check = kiemTraThietBiPhongChuaTra(maPhong);
+			if(check) return;
+		}
 	    String sql = "UPDATE Phong SET TRANGTHAI = ? WHERE MAPHONG = ?;";
 
 	    try {
@@ -102,7 +128,7 @@ public class PhongDAO {
 	
 	public String xoaPhong(String maPhong) {
 		int length = kiemTraThietBiCuaPhong(maPhong);
-		
+	
 		if(length > 0) {
 			return "Không được xóa phòng đã có thiết bị, vui lòng kiểm tra lại";
 		}else {
@@ -154,6 +180,63 @@ public class PhongDAO {
 	    
 	    return list;
 	}
-
+	
+	public List<ThietBi> layThietBiTrongPhong(String maPhong) {
+		
+	    List<ThietBi> list = new ArrayList<ThietBi>();
+	    String sql = "SELECT THIETBI.*, TRANGTHAI.TenTinhTrang, LOAITB.TENLOAI "
+	    		+ "FROM THIETBI "
+	    		+ "JOIN TRANGTHAI ON THIETBI.TINHTRANGTB = TRANGTHAI.MaTinhTrang "
+	    		+ "JOIN LOAITB ON THIETBI.LOAITBI = LOAITB.MALOAI "
+	    		+ "WHERE THIETBI.MAPHONG = ?";
+	    
+	    try {
+	       
+	        list = _jdbcTemplate.query(sql, new Object[]{maPhong}, new MapperThietBi());
+	    } catch (DataAccessException e) {
+	        // Handle errors if necessary
+	        e.printStackTrace();
+	    }
+	    
+	    return list;
+	} 
+	
+	public List<ThietBi> layThietBiSanSangTrongPhong(String maPhong) {
+			
+		    List<ThietBi> list = new ArrayList<ThietBi>();
+		    String sql = "SELECT THIETBI.*, TRANGTHAI.TenTinhTrang, LOAITB.TENLOAI "
+		    		+ "FROM THIETBI "
+		    		+ "JOIN TRANGTHAI ON THIETBI.TINHTRANGTB = TRANGTHAI.MaTinhTrang "
+		    		+ "JOIN LOAITB ON THIETBI.LOAITBI = LOAITB.MALOAI "
+		    		+ "WHERE THIETBI.MAPHONG = ? and THIETBI.TINHTRANGTB = 0 ";
+		    
+		    try {
+		       
+		        list = _jdbcTemplate.query(sql, new Object[]{maPhong}, new MapperThietBi());
+		    } catch (DataAccessException e) {
+		        // Handle errors if necessary
+		        e.printStackTrace();
+		    }
+		    
+		    return list;
+		} 
+	
+	
+	public List<Phong> layPhongSanSang() {
+			
+		    List<Phong> list = new ArrayList<Phong>();
+		    String sql = "select * from Phong join TRANGTHAI on\r\n"
+		    		+ "Phong.TRANGTHAI = TRANGTHAI.MaTinhTrang and\r\n"
+		    		+ "TRANGTHAI = 0";
+		    
+		    try { 
+		        list = _jdbcTemplate.query(sql, new Object[]{}, new MapperPhong());
+		    } catch (DataAccessException e) {
+		        // Handle errors if necessary
+		        e.printStackTrace();
+		    }
+		    
+		    return list;
+		} 
 
 }

@@ -23,7 +23,7 @@
 			<h5 class="mt-3">Chỉnh sửa trạng thái phòng:</h5>
 
 			<select class="form-select mt-4" style="width: 500px"
-				name="selectOption" id="cars">
+				 id="cars">
 
 				<c:forEach var="item" items="${trangThai}">
 					<option value="${item.maTinhTrang}"

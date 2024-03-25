@@ -39,7 +39,7 @@ public class LoginController {
 	@RequestMapping(value = "login", method = RequestMethod.POST)
 	public ModelAndView homePage(@ModelAttribute("loginForm") Account acc, ModelMap model, BindingResult errors,
 	        HttpSession ss) throws IOException {
-
+   
 	    // You can access email and password directly from the Account object
 	    String email = acc.getEmail();
 	    String password = acc.getPassword();

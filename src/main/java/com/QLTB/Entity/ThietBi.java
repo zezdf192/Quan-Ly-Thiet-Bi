@@ -3,8 +3,11 @@ package com.QLTB.Entity;
 public class ThietBi {
 	private String maTB;
 	private String loaiTB;
+	private String tenTB;
 	private String maPhong;
 	private int tinhTrangTB;
+	private String tenTinhTrang;
+	
 	
 	public ThietBi() {
 		
@@ -41,6 +44,24 @@ public class ThietBi {
 	public void setTinhTrangTB(int tinhTrangTB) {
 		this.tinhTrangTB = tinhTrangTB;
 	}
+
+	public String getTenTinhTrang() {
+		return tenTinhTrang;
+	}
+
+	public void setTenTinhTrang(String tenTinhTrang) {
+		this.tenTinhTrang = tenTinhTrang;
+	}
+
+	public String getTenTB() {
+		return tenTB;
+	}
+
+	public void setTenTB(String tenTB) {
+		this.tenTB = tenTB;
+	}
+	
+	
 	
 	
 }

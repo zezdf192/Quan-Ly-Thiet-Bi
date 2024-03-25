@@ -9,7 +9,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 
 <style>
 * {
@@ -179,6 +184,47 @@ td {
     padding: 16px 12px;
     text-align: center;
 }
+
+.list-container {
+  max-height: 580px; /* Đặt chiều cao tối đa cho thẻ ul */
+  overflow-y: auto; /* Cho phép hiển thị thanh cuộn khi cần thiết */
+}
+
+.list-item {
+  list-style-type: none; /* Loại bỏ các dấu hiệu danh sách mặc định */
+  padding: 0;
+  margin: 0;
+}
+
+.list-item li {
+  padding: 8px; /* Để tạo khoảng cách giữa các mục */
+}
+
+.table-tb-wrapper {
+    max-height: 400px; /* Đặt chiều cao tối đa cho bảng */
+    overflow-y: auto; /* Cho phép hiển thị thanh cuộn khi cần thiết */
+}
+
+.table-tb {
+    width: 100%; /* Đảm bảo bảng chiếm đầy đủ chiều rộng của bảng gói */
+}
+
+.table-tb thead,
+.table-tb tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed; /* Đảm bảo các cột có chiều rộng cố định */
+}
+
+.table-tb tbody {
+    display: block; /* Tạo thành phần hiển thị dạng block cho tbody để có thể sử dụng overflow-y */
+}
+
+.table-tb td {
+	    border-bottom: 1px solid #ccc;
+}
+
+
 
 </style>
 </head>

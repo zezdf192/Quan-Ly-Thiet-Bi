@@ -12,7 +12,9 @@ public class MapperThietBi implements RowMapper<ThietBi> {
 		thietBi.setMaPhong(rs.getString("MAPHONG"));
 		thietBi.setLoaiTB(rs.getString("LOAITBI"));
 		thietBi.setMaTB(rs.getString("MATBI"));
+		thietBi.setTenTB(rs.getString("TENLOAI"));
 		thietBi.setTinhTrangTB(rs.getInt("TINHTRANGTB"));
+		thietBi.setTenTinhTrang(rs.getString("TenTinhTrang"));
 		return thietBi;
 	}
 }
