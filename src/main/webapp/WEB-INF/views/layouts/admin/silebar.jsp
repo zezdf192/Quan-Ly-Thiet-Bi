@@ -40,11 +40,12 @@
 <body>
 	<div class="sidebar-container">
 		<div class="list-action">
-				<a class="action-item active" href="/QuanLyThietBi/quan-tri/quan-ly-phong"">Quản lý phòng</a>
+				<a class="action-item active" href="/QuanLyThietBi/quan-tri/quan-ly-phieu-muon">Lập phiếu mượn</a>
+				<a class="action-item " href="/QuanLyThietBi/quan-tri/quan-ly-phong"">Quản lý phòng</a>
 				<a class="action-item" href="/QuanLyThietBi/quan-tri/quan-ly-thiet-bi">Quản lý thiết bị</a>
 				<a class="action-item" href="/QuanLyThietBi/quan-tri/quan-ly-nhanvien">Quản lý nhân viên</a>
-				<a class="action-item" href="/QuanLyThietBi/quan-tri/quan-ly-phieu-muon">Lập phiếu mượn</a>
-				<a class="action-item" href="/ratings/examId">Thống kê phiếu mượn</a>
+				
+				<a class="action-item" href="/QuanLyThietBi/quan-tri/thong-ke">Thống kê phiếu mượn</a>
 		</div>
 	</div>
 	

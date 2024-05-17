@@ -27,6 +27,8 @@
 	                    <div class="form-group col-md-6">
 	                        <label for="dateTime">Chọn thời gian trả:</label>
 	                        <input type="datetime-local" required class="form-control" id="dateTime" name="dateTime">
+	                        <button type="button" class="btn btn-primary mt-2" id="morningButton">Sáng</button>
+        					<button type="button" class="btn btn-secondary mt-2" id="afternoonButton">Chiều</button>
 	                    </div>
 	                     <input type="text" hidden="hidden" name="maPhong" value="${ maPhong }">
 	                    
@@ -35,7 +37,7 @@
                 
 			</div>
 			
-			<div class="col-md-6 mt-2">
+			<div class="col-md-4 mt-2">
 				<h3>Thiết bị sẵn sàng cho mượn</h3>
 				<div class="list-container">
 					<ul class="list-group list-item" id="elementList">
@@ -45,7 +47,19 @@
 					</ul>
 				</div>
 			</div>
-			<div class="col-md-6 mt-2">
+			
+			<div class="col-md-4 mt-2">
+				<h3>Thiết bị phòng CSVC</h3>
+				<div class="list-container">
+					<ul class="list-group list-item" id="elementList">
+					<c:forEach var="item" items="${ csvc }">
+						<li class="list-group-item">${ item.maTB } - ${item.tenTB }</li>	
+					</c:forEach>
+					</ul>
+				</div>
+			</div>
+			
+			<div class="col-md-4 mt-2">
 				<h2>Thiết bị mượn</h2>
 				<div class="table-tb-wrapper">
 					<table class="table-tb">
@@ -128,6 +142,33 @@
 	});
 	
 	</script>
+	
+	 <script>
+        document.getElementById('morningButton').addEventListener('click', function() {
+            setDateTime('11:30');
+        });
+
+        document.getElementById('afternoonButton').addEventListener('click', function() {
+            setDateTime('17:30');
+        });
+
+        function setDateTime(time) {
+            const dateInput = document.getElementById('dateTime');
+            const dateValue = new Date(dateInput.value);
+            if (!isNaN(dateValue.getTime())) {  // Check if the date is valid
+                const [hours, minutes] = time.split(':');
+                dateValue.setHours(parseInt(hours), parseInt(minutes), 0, 0);
+
+                // Adjust for timezone offset
+                const tzoffset = (new Date()).getTimezoneOffset() * 60000; // offset in milliseconds
+                const localISOTime = (new Date(dateValue.getTime() - tzoffset)).toISOString().slice(0, 16);
+
+                dateInput.value = localISOTime;
+            } else {
+                alert('Vui lòng chọn ngày hợp lệ trước.');
+            }
+        }
+    </script>
 	
 	
 

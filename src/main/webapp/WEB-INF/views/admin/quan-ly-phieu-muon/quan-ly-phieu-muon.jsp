@@ -20,17 +20,17 @@
 				data-bs-target="#addNew">Lập phiếu mượn</button> -->
 			<div>
 				<form:form class="d-flex" style="gap:20px; height:40px" method="GET"
-					action="/QuanLyThietBi/quan-tri/quan-ly-nhanvien/tim-kiem-nhanvien">
+					action="/QuanLyThietBi/quan-tri/quan-ly-phieu-muon/tim-kiem-phieu-muon">
 					<input name="inputText" class="form-control"
-						placeholder="Tìm kiếm..." />
+						placeholder="Tìm kiếm theo mã phòng..." />
 					<select class="form-select " style="width: 250px"
 						name="selectOption" id="cars">
-
-						<option value="0">Mã Phòng</option>
-						<option value="1">Thời điểm mượn</option>
-						<option value="2">Thời điểm trả</option>
-						<option value="3">Mã sinh viên mượn</option>
-						<option value="4">Mã nhân viên lập</option>
+						<option value="10">Tất cả phiếu mượn</option>
+						<option value="0">Phiếu mượn chưa trả</option>
+						<option value="1">Phiếu mượn đã trả</option>
+						<option value="2">Phiếu mượn quá hạn</option>
+						
+						
 					</select>
 
 
@@ -47,7 +47,7 @@
 						<tr class="table-header">
 							<th style="width: 15%">Mã Phòng</th>
 							<th style="width: 15%">Thời điểm mượn</th>
-							<th style="width: 15%">Thời điểm trả</th>
+							<th style="width: 15%">Han trả</th>
 							<th style="width: 15%">Mã SV mượn</th>
 							<th style="width: 15%">Mã NV xuất</th>
 							<th>Thao tác</th>
@@ -62,20 +62,20 @@
 							<tr>
 								<td style="width: 15%">${ item.maPhong }</td>
 								<td style="width: 15%">${item.thoiDiemMuon}</td>
-								<td style="width: 15%">${item.thoiDiemTra}</td>
+								<td style="width: 15%">${item.hanTra}</td>
 								<td style="width: 15%">${item.maSVMuon}</td>
 								<td style="width: 15%">${item.maNVLap}</td>
 								<td class="action"
 									style="display: flex; gap: 5px; justify-content: center">
 									<button type="button" class="btn btn-success btn-show"
 										data-bs-toggle="modal" data-bs-target="#inforForm"
-										data-bs-whatever="${item.maPhieuMuon} , ${item.maPhong} , ${item.maSVMuon} , ${item.maNVLap} , ${item.thoiDiemMuon} ,${item.thoiDiemTra}">Xem</button>
-									<button type="button" class="btn btn-warning btn-update"
+										data-bs-whatever="${item.maPhieuMuon} , ${item.maPhong} , ${item.maSVMuon} , ${item.maNVLap} , ${item.thoiDiemMuon} ,${item.hanTra}">Xem</button>
+									<%-- <button type="button" class="btn btn-warning btn-update"
 										data-bs-toggle="modal" data-bs-target="#update"
 										data-bs-whatever="${item.maPhieuMuon}">Sửa</button>
 									<button type="button" class="btn btn-danger btn-delete"
 										data-bs-toggle="modal" data-bs-target="#confirmDelete"
-										data-bs-whatever="${item.maPhieuMuon}">Xóa</button>
+										data-bs-whatever="${item.maPhieuMuon}">Xóa</button> --%>
 								</td>
 							</tr>
 						</c:forEach>
@@ -126,8 +126,8 @@
 							</div>
 							
 							<div class="col-md-12">
-								<label for="thoiDiemTra" class="form-label">Thời gian trả</label> <input
-									name="thoiDiemTra" type="text" class="form-control" id="tgtraInput"
+								<label for="hanTra" class="form-label">Thời gian trả</label> <input
+									name="hanTra" type="text" class="form-control" id="tgtraInput"
 									disabled="true" />
 							</div>
 							<div class="col-md-12">

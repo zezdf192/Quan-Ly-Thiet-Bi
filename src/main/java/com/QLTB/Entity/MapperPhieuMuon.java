@@ -15,10 +15,11 @@ public class MapperPhieuMuon implements RowMapper<PhieuMuon>{
 		pm.setMaPhong(rs.getString("MAPHG"));
 		 LocalDateTime thoiDiemMuon = rs.getTimestamp("THOIDIEMMUON").toLocalDateTime();
 	        pm.setThoiDiemMuon(thoiDiemMuon);
-	        
+	        LocalDateTime hanTra = rs.getTimestamp("HANTRA").toLocalDateTime();
+	        pm.setHanTra(hanTra);
 	        // Sử dụng Timestamp cho datetime
-	        LocalDateTime thoiDiemTra = rs.getTimestamp("THOIDIEMTRA").toLocalDateTime();
-	        pm.setThoiDiemTra(thoiDiemTra);
+//	        LocalDateTime thoiDiemTra = rs.getTimestamp("THOIDIEMTRA").toLocalDateTime();
+//	        pm.setThoiDiemTra(thoiDiemTra);
 		pm.setMaSVMuon(rs.getString("SINHVIENMUON"));
 		pm.setMaNVLap(rs.getString("NGUOILAPPHIEU"));
 		return pm;

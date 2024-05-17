@@ -86,7 +86,7 @@ public class QuanLyPhongController {
 	     String lastElement = parts[parts.length - 1];
 	     lastElement = java.net.URLDecoder.decode(lastElement, StandardCharsets.UTF_8);
 	     
-	     phongDAO.thayDoiPhong(selectOption, lastElement);
+	     phongDAO.thayDoiPhong(selectOption, lastElement, null);
 	     
 	     
 			

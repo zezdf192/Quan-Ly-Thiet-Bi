@@ -31,6 +31,7 @@ import com.QLTB.DAO.LoaiTBDAO;
 import com.QLTB.DAO.NhanVienDAO;
 import com.QLTB.DAO.PhieuMuonDAO;
 import com.QLTB.DAO.PhongDAO;
+import com.QLTB.DAO.ThietBiDAO;
 import com.QLTB.Entity.NhanVien;
 import com.QLTB.Entity.PhieuMuon;
 import com.QLTB.Entity.Phong;
@@ -54,6 +55,9 @@ public class QuanLyPhieuMuonController {
 	
 	@Autowired
 	CTPhieuMuonDAO ctpmDAO;
+	
+	@Autowired
+	ThietBiDAO tbDAO;
 	
 	
 	private String getLastPathSegment(String url) {
@@ -124,6 +128,8 @@ public class QuanLyPhieuMuonController {
 		 mav.addObject("maPhong", lastElement); 
 	     mav.addObject("thietbi", phongDAO.layThietBiSanSangTrongPhong(lastElement));
 	     mav.addObject("loaiTB", loaiTBDAO.getLoaiThietBi());
+	     mav.addObject("csvc", tbDAO.getThietBiCSVC());
+	     
 	 
 		 return mav;
 	}
@@ -135,25 +141,12 @@ public class QuanLyPhieuMuonController {
             @RequestParam("selectedElements") String selectedElements,  RedirectAttributes redirectAttributes, HttpServletRequest request) {
 		
 //		String url = request.getRequestURL().toString();
-		System.out.println(maPhong);
-		System.out.println(studentID);
-		System.out.println(dateString);
-		System.out.println(selectedElements);
+	
 		
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
         LocalDateTime dateTime = LocalDateTime.parse(dateString, formatter);
         long timestamp = dateTime.toEpochSecond(java.time.ZoneOffset.UTC) * 1000;
-//		 String[] parts = url.split("/");
-//	        
-//	     String lastElement = parts[parts.length - 1];
-//	     lastElement = java.net.URLDecoder.decode(lastElement, StandardCharsets.UTF_8);
-//	
-//		 ModelAndView mav = new ModelAndView("admin/quan-ly-phieu-muon/thiet-bi-trong-phong");
-//		 mav.addObject("maPhong", lastElement); 
-//	     mav.addObject("thietbi", phongDAO.layThietBiTrongPhong(lastElement));
-//	     mav.addObject("loaiTB", loaiTBDAO.getLoaiThietBi());
-		
-		//ArrayList<String> outputs = new ArrayList<>();
+
 		String inputString = selectedElements;
 		 List<String> outputList = new ArrayList<>();
 
@@ -198,6 +191,11 @@ public class QuanLyPhieuMuonController {
 	     }
 	     mav.addObject("thietbidatra", ctpmDAO.getAllCTPhieuMuonDaTra(lastElement));
 	     mav.addObject("pm", ctpmDAO.getPMByMaPM(lastElement) );
+	     mav.addObject("csvc", tbDAO.getThietBiCSVC());
+	    
+	     mav.addObject("tb", tbDAO.getThietBiChuaMuonMaPM(lastElement));
+	  
+	     
 //	     mav.addObject("loaiTB", loaiTBDAO.getLoaiThietBi());
 	 
 		 return mav;
@@ -205,31 +203,57 @@ public class QuanLyPhieuMuonController {
 	
 	@RequestMapping(value = "/quan-tri/quan-ly-phieu-muon/xac-nhan-tra", method = RequestMethod.POST)
 	public ModelAndView xacNhanTraPhieuMuon(@RequestParam String maPM , @RequestParam String maPhong,
-            @RequestParam("selectedElements") String selectedElements,  
+            @RequestParam("selectedElements") String selectedElements,   @RequestParam("selectedElements1") String selectedElements1,
             RedirectAttributes redirectAttributes, HttpServletRequest request) {
 
 		String inputString = selectedElements;
+		String inputString1 = selectedElements1;
+		
+		
 		 List<String> outputList = new ArrayList<>();
+		 List<String> outputList1 = new ArrayList<>();
 
 	        // Sử dụng biểu thức chính quy để tìm và cắt chuỗi
 	        Pattern pattern = Pattern.compile("\\b[A-Z]+\\d+");
 	        Matcher matcher = pattern.matcher(inputString);
+	        Matcher matcher1 = pattern.matcher(inputString1);
 	        while (matcher.find()) {
 	            outputList.add(matcher.group());
 	        }
+	        while (matcher1.find()) {
+	            outputList1.add(matcher1.group());
+	        }
+	      
+	        
 	        //String maPhong, Timestamp thoiDiemTra,String nvLap, String svMuon
 	        // Chuyển đổi danh sách kết quả thành mảng
 	        List<String> outputs = Arrays.asList(outputList.toArray(new String[0]));
+	        List<String> outputs1 = Arrays.asList(outputList1.toArray(new String[0]));
+	        
 	        String log = phieuMuonDAO.traPhieuMuon(maPM, maPhong, outputs);
+	        
+	     
+	        String logMuonThemTb = phieuMuonDAO.muonThemTB(outputs1, maPM);
+	        
 	        // In ra mảng kết quả
-	        if(!log.equals("Success")) {
+	        if(!log.equals("Success")) { 
 	        	System.out.println(log);
 	        	 redirectAttributes.addFlashAttribute("error", log);
 	        	 return new ModelAndView("redirect:/quan-tri/quan-ly-phieu-muon/lap-phieu-muon/" + maPhong);
 	        }
-	      
 	 
 		 return new ModelAndView("redirect:/quan-tri/quan-ly-phieu-muon" );
 	}
+	
+	@RequestMapping(value = "quan-tri/quan-ly-phieu-muon/tim-kiem-phieu-muon", method = RequestMethod.GET)
+	   public ModelAndView timKiemPMPage(@RequestParam String selectOption, String inputText, HttpServletRequest request) {
+		
+		int typeFind = Integer.valueOf(selectOption);
+			
+		 ModelAndView mav = new ModelAndView("admin/quan-ly-phieu-muon/quan-ly-phieu-muon");
+		 mav.addObject("phieumuons", phieuMuonDAO.timKiemPM(inputText, typeFind));
+ 	 
+	     return mav;
+	   }
 	
 }

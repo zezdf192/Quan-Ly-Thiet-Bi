@@ -16,9 +16,11 @@ import org.springframework.stereotype.Repository;
 
 import com.QLTB.Entity.MapperNhanVien;
 import com.QLTB.Entity.MapperPhieuMuon;
+import com.QLTB.Entity.MapperPhong;
 import com.QLTB.Entity.MapperThietBi;
 import com.QLTB.Entity.NhanVien;
 import com.QLTB.Entity.PhieuMuon;
+import com.QLTB.Entity.Phong;
 import com.QLTB.Entity.SinhVien;
 
 @Repository
@@ -104,6 +106,7 @@ public class PhieuMuonDAO {
 	}
 	//---------------------------------------------------------------------
 	public void insertChiTietPhieuMuon(String maPM, List<String> tb) {
+		
 	    String sql = "INSERT INTO CTPHIEUMUON (MAPHIEUMUON, MATB, TRANGTHAI) VALUES ";
 	    for(int i = 0; i < tb.size(); i++) {
 	        sql += "('" + maPM + "','" + tb.get(i) + "', 3)";
@@ -141,7 +144,20 @@ public class PhieuMuonDAO {
 	    }
 	}
 
-	
+	public String muonThemTB( List<String> tb, String maPM) {
+		
+		
+		
+		try {
+	        insertChiTietPhieuMuon(maPM, tb);
+	      
+	        thayDoiTrangThaiTB("1", tb);
+	    } catch (DataAccessException e) {
+	        e.printStackTrace();
+	        return "Lỗi hệ thống";
+	    }
+	    return "Success";
+	}
 	
 	public String insertPhieuMuon(String maPhong, LocalDateTime thoiDiemTra, String nvLap, String svMuon, List<String> tb) {
 		List<SinhVien> sv =  svDAO.getSinhVien(svMuon);
@@ -150,11 +166,11 @@ public class PhieuMuonDAO {
 		}
 		 String uniqueString = generateUniqueString();
 	    LocalDateTime currentDateTime = LocalDateTime.now();
-	    String sql = "INSERT INTO PHIEUMUON (MAPM, MAPHG, THOIDIEMMUON, THOIDIEMTRA, NGUOILAPPHIEU, SINHVIENMUON) VALUES (?,?, ?, ?, ?, ?)";
+	    String sql = "INSERT INTO PHIEUMUON (MAPM, MAPHG, THOIDIEMMUON, HANTRA, NGUOILAPPHIEU, SINHVIENMUON) VALUES (?,?, ?, ?, ?, ?)";
 	    try {
 	        _jdbcTemplate.update(sql, uniqueString, maPhong, currentDateTime, thoiDiemTra, nvLap, svMuon);
 	        insertChiTietPhieuMuon(uniqueString, tb);
-	        phongDAO.thayDoiPhong("1", maPhong);
+	        phongDAO.thayDoiPhong("1", maPhong, "null");
 	        thayDoiTrangThaiTB("1", tb);
 	    } catch (DataAccessException e) {
 	        e.printStackTrace();
@@ -193,7 +209,7 @@ public class PhieuMuonDAO {
 	    try {
 	        //_jdbcTemplate.update(sql, uniqueString, maPhong, currentDateTime, thoiDiemTra, nvLap, svMuon);
 	    	thayDoiCTPhieuMuon(maPM, tb);
-	        phongDAO.thayDoiPhong("0", maPhong);
+	        phongDAO.thayDoiPhong("0", maPhong, maPM);
 	        thayDoiTrangThaiTB("0", tb);
 	    } catch (DataAccessException e) {
 	        e.printStackTrace();
@@ -201,5 +217,37 @@ public class PhieuMuonDAO {
 	    }
 	    return "Success";
 	}
-
+	
+	
+	
+	
+	public List<PhieuMuon> timKiemPM(String inputFind, int typeFind) {
+		String sql;
+		if(typeFind == 10) {
+			 sql = "SELECT  * from PHIEUMUON "
+		            + "WHERE MAPHG LIKE ?";
+		} else if (typeFind == 0) {
+			 sql = "SELECT  * from PHIEUMUON "
+		            + "WHERE MAPHG LIKE ? AND THOIDIEMTRA IS NULL";
+		} else if (typeFind == 1) {
+			 sql = "SELECT  * from PHIEUMUON "
+		            + "WHERE MAPHG LIKE ? AND THOIDIEMTRA < HANTRA";
+		} else {
+			 sql = "SELECT  * from PHIEUMUON "
+		            + "WHERE MAPHG LIKE ? AND THOIDIEMTRA > HANTRA";
+		}
+	   	
+		List<PhieuMuon> list = new ArrayList<PhieuMuon>();
+	 
+	    try {
+	       
+	        String inputPattern = "%" + inputFind + "%";
+	        list = _jdbcTemplate.query(sql, new Object[]{inputPattern}, new MapperPhieuMuon());
+	    } catch (DataAccessException e) {
+	        // Handle errors if necessary
+	        e.printStackTrace();
+	    }
+	    
+	    return list;
+	}
 }

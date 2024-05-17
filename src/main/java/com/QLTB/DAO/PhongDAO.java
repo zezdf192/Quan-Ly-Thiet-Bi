@@ -1,5 +1,6 @@
 package com.QLTB.DAO;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -104,15 +105,18 @@ public class PhongDAO {
 		else return false;
 	}
 	
-	public void thayDoiPhong(String maTinhTrang, String maPhong) {
+	public void thayDoiPhong(String maTinhTrang, String maPhong, String maPM) {
 		if(maTinhTrang.equals("0")) {
 			boolean check = kiemTraThietBiPhongChuaTra(maPhong);
 			if(check) return;
 		}
+		
+		  LocalDateTime currentDateTime = LocalDateTime.now();
 	    String sql = "UPDATE Phong SET TRANGTHAI = ? WHERE MAPHONG = ?;";
-
+	    String sql2 = "UPDATE PHIEUMUON SET THOIDIEMTRA = ? WHERE MAPM = ?";
 	    try {
 	        _jdbcTemplate.update(sql, maTinhTrang, maPhong);
+	        _jdbcTemplate.update(sql2, currentDateTime, maPM);
 	    } catch (DataAccessException e) {
 	       
 	        e.printStackTrace();

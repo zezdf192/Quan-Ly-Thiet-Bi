@@ -11,8 +11,10 @@ import org.springframework.stereotype.Repository;
 
 import com.QLTB.Entity.LoaiTB;
 import com.QLTB.Entity.MapperLoaiTB;
+import com.QLTB.Entity.MapperPhieuMuon;
 import com.QLTB.Entity.MapperPhong;
 import com.QLTB.Entity.MapperThietBi;
+import com.QLTB.Entity.PhieuMuon;
 import com.QLTB.Entity.Phong;
 import com.QLTB.Entity.ThietBi;
 
@@ -273,6 +275,60 @@ public class ThietBiDAO {
 	    
 	    return "Thay đổi thông tin thiết bị thành công!";
 	}
-
-
+	
+	public List<ThietBi> getThietBiCSVC() {
+			
+		    List<ThietBi> list = new ArrayList<ThietBi>();
+		    String sql = "select * from THIETBI join LOAITB on \r\n"
+		    		+ "THIETBI.LOAITBI = LOAITB.MALOAI join TRANGTHAI on \r\n"
+		    		+ "TRANGTHAI.MaTinhTrang = THIETBI.TINHTRANGTB\r\n"
+		    		+ "where TINHTRANGTB = 0  and maphong = 'CSVC'";
+		    		
+		    
+		    try {
+		        list = _jdbcTemplate.query(sql, new Object[]{}, new MapperThietBi());
+		    } catch (DataAccessException e) {
+		        // Handle errors if necessary
+		        e.printStackTrace();
+		    }
+		   
+		    return list;
+		}
+	
+	public List<PhieuMuon> getMaPhongBangMaPhieuMuon(String maPM) {
+		List<PhieuMuon> list =  new ArrayList<PhieuMuon>();
+		String sql = "select * from PHIEUMUON where MAPM = ?";
+		
+		try {
+	        list = _jdbcTemplate.query(sql, new Object[]{maPM}, new MapperPhieuMuon());
+	    } catch (DataAccessException e) {
+	        // Handle errors if necessary
+	        e.printStackTrace();
+	    }
+	   
+		
+		return list;
+	}
+		
+	public List<ThietBi> getThietBiChuaMuonMaPM(String maPM) {
+		
+		List <PhieuMuon> listPM = getMaPhongBangMaPhieuMuon(maPM);
+		
+		
+	    List<ThietBi> list = new ArrayList<ThietBi>();
+	    String sql = "select * from THIETBI join LOAITB on \r\n"
+	    		+ "THIETBI.LOAITBI = LOAITB.MALOAI join TRANGTHAI on \r\n"
+	    		+ "TRANGTHAI.MaTinhTrang = THIETBI.TINHTRANGTB\r\n"
+	    		+ "where TINHTRANGTB = 0  and maphong = ?";
+	    		
+	    
+	    try {
+	        list = _jdbcTemplate.query(sql, new Object[]{listPM.get(0).getMaPhong()}, new MapperThietBi());
+	    } catch (DataAccessException e) {
+	        // Handle errors if necessary
+	        e.printStackTrace();
+	    }
+	   
+	    return list;
+	}
 }

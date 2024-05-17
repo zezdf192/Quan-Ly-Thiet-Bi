@@ -53,7 +53,7 @@ public class LoginController {
 	    if(values.get(0).equals("Success")) {
 	    	ModelAndView mav = null;
 	    	if(values.get(1).equals("admin")) {
-	    		mav = new ModelAndView("redirect:	quan-tri/quan-ly-phong");
+	    		mav = new ModelAndView("redirect:	quan-tri/quan-ly-phieu-muon");
 	    		mav.addObject("phongs", homeDAO.getDataPhong());
 	    	}else if(values.get(1).equals("nhanvien")) {
 	    		mav = new ModelAndView("nhanvien/nhanvien");

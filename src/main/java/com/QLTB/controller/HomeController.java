@@ -109,4 +109,11 @@ public class HomeController {
 		mapm.addObject("listphong", homeDAO.getDataPhong());
 		return mapm;
 	}
+	
+	@RequestMapping(value="/quan-tri/thong-ke", method=RequestMethod.GET)
+	public ModelAndView thongkePage() {
+		ModelAndView mav = new ModelAndView("admin/thong-ke/thong-ke");
+		mav.addObject("listphieumuon", pmDAO.getAllPhieuMuon());
+		return mav;
+	}
 }

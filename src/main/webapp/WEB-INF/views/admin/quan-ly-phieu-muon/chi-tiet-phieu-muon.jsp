@@ -26,9 +26,9 @@
 	                        <input type="text" required class="form-control" id="studentID" name="studentID" value="${pm.maSVMuon }" readonly>
 	                    </div>
 	                    <div class="form-group col-md-6">
-	                        <label for="dateTime">Thời gian trả:</label>
+	                        <label for="dateTime">Hạn trả:</label>
 	                        <!-- <input type="datetime-local" required class="form-control" id="dateTime" name="dateTime" readonly> -->
-	                        <input name="thoiDiemTra" type="text" class="form-control" id="tgtraInput" readonly value=${ pm.thoiDiemTra }/>
+	                        <input name="hanTra" type="text" class="form-control" id="tgtraInput" readonly value=${ pm.hanTra }/>
 	                    </div>
 	                     <input type="text" hidden="hidden" name="maPM" value="${ pm.maPhieuMuon }">
 	                     <input type="text" hidden="hidden" name="maPhong" value="${ pm.maPhong }">
@@ -50,6 +50,24 @@
 					</ul>
 				</div>
 			</div>
+			
+			<div class="col-md-6 mt-2">
+				<h3>Thiết bị sẵn sàng cho mượn</h3>
+				<div class="list-container">
+					<ul class="list-group list-item" id="elementList1">
+					
+					<c:forEach var="item" items="${ csvc }">
+						<li class="list-group-item">${ item.maTB } - ${item.tenTB }</li>	
+					</c:forEach>
+					
+					<c:forEach var="item" items="${ tb }">
+						<li class="list-group-item">${ item.maTB } - ${item.tenTB }</li>	
+					</c:forEach>
+					
+					</ul>
+				</div>
+			</div>
+			
 			<div class="col-md-6 mt-2">
 				<h2>Thiết bị đã trả</h2>
 				<div class="table-tb-wrapper">
@@ -70,6 +88,26 @@
 					</table>
 				</div>
 			</div>
+			
+			<div class="col-md-6 mt-2">
+				<h2>Thiết bị mượn thêm</h2>
+				<div class="table-tb-wrapper">
+					<table class="table-tb">
+						<thead>
+							<tr>
+								<th>Tên</th>
+							</tr>
+						</thead>
+						<tbody id="selectedElement1">
+							
+							
+							<!-- Dữ liệu về phần tử được chọn sẽ được thêm vào đây -->
+						</tbody>
+					</table>
+				</div>
+			</div>
+			
+			
 			<div class="form-group col-12 mt-4 d-flex justify-content-end">
 					<c:if test="${soluongtbconlai >= 1}">
 				        <button type="submit" class="btn btn-primary" >Xác nhận</button>
@@ -94,6 +132,7 @@
 	$(document).ready(function() {
 	    // Mảng để lưu trữ tên các phần tử đã được chọn
 	    var selectedElements = [];
+	    var selectedElements1 = [];
 
 	    // Xử lý sự kiện khi phần tử trong danh sách được click
 	    $('#elementList li').click(function() {
@@ -111,6 +150,23 @@
 	        }
 	    });
 
+	    $('#elementList1 li').click(function() {
+	        // Lấy tên của phần tử được click
+	        var elementName1 = $(this).text();
+	      
+
+	        // Kiểm tra xem phần tử đã được chọn trước đó hay chưa
+	        if (!selectedElements1.includes(elementName1)) {
+	            // Thêm tên phần tử vào mảng các phần tử đã được chọn
+	            
+	            selectedElements1.push(elementName1);
+
+	            // Tạo một hàng mới trong bảng và thêm vào
+	            var newRow = '<tr data-name="' + elementName1 + '"><td>' + elementName1 + '</td></tr>';
+	            $('#selectedElement1').append(newRow);
+	        }
+	    });
+
 	    // Xử lý sự kiện khi phần tử trong bảng được click
 	    $(document).on('click', '#selectedElement tr', function() {
 	        // Lấy tên của phần tử được click
@@ -125,13 +181,26 @@
 	        $(this).remove();
 	    });
 
+	    $(document).on('click', '#selectedElement1 tr', function() {
+	        // Lấy tên của phần tử được click
+	        var elementName1 = $(this).data('name');
+
+	        // Xóa phần tử khỏi mảng các phần tử đã được chọn
+	        selectedElements1 = selectedElements1.filter(function(item) {
+	            return item !== elementName1;
+	        });
+
+	        // Xóa hàng tương ứng khỏi bảng
+	        $(this).remove();
+	    });
+
         // Xử lý sự kiện gửi form
 	    $('#borrowForm').submit(function(event) {
 	    	
 	        // Kiểm tra xem có phần tử nào đã được chọn hay không
-	        if (selectedElements.length === 0) {
+	        if (selectedElements.length === 0 && selectedElements1.length === 0) {
 	            event.preventDefault(); // Ngăn form gửi đi nếu không có phần tử nào được chọn
-	            alert("Bạn cần phải chọn ít nhất một thiết bị để mượn!");
+	            alert("Bạn cần phải chọn ít nhất một thiết bị để trả!");
 	        } else {
 	            
 	            
@@ -141,6 +210,13 @@
 	                    type: 'hidden',
 	                    name: 'selectedElements',
 	                    value: selectedElementNames
+	                }).appendTo('#borrowForm');
+
+	                var selectedElementNames1 = selectedElements1.join(', ');
+	                $('<input>').attr({
+	                    type: 'hidden',
+	                    name: 'selectedElements1',
+	                    value: selectedElementNames1
 	                }).appendTo('#borrowForm');
 	              
 	                return true; // Cho phép tiếp tục gửi form

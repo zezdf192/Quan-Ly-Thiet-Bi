@@ -7,18 +7,18 @@ public class PhieuMuon {
 	private String maPhieuMuon;
 	private String maPhong;
 	private LocalDateTime  thoiDiemMuon;
-
-	private LocalDateTime  thoiDiemTra;
+	private LocalDateTime hanTra;
+	//private LocalDateTime  thoiDiemTra;
 	private String maSVMuon;
 	private String maNVLap;
-	public PhieuMuon(String maPhieuMuon, String maPhong, LocalDateTime  thoiDiemMuon, LocalDateTime  thoiDiemTra,
+	public PhieuMuon(String maPhieuMuon, String maPhong, LocalDateTime  thoiDiemMuon,  LocalDateTime  hanTra,
 			String maSVMuon, String maNVLap) {
 		super();
 		this.maPhieuMuon = maPhieuMuon;
 		this.maPhong = maPhong;
 		this.thoiDiemMuon = thoiDiemMuon;
-		
-		this.thoiDiemTra = thoiDiemTra;
+		this.hanTra = hanTra;
+		//this.thoiDiemTra = thoiDiemTra;
 		this.maSVMuon = maSVMuon;
 		this.maNVLap = maNVLap;
 	}
@@ -44,14 +44,23 @@ public class PhieuMuon {
 		this.thoiDiemMuon = thoiDiemMuon;
 	}
 	
-	public LocalDateTime  getThoiDiemTra() {
-		return thoiDiemTra;
-	}
-	public void setThoiDiemTra(LocalDateTime  thoiDiemTra) {
-		this.thoiDiemTra = thoiDiemTra;
-	}
+//	public LocalDateTime  getThoiDiemTra() {
+//		return thoiDiemTra;
+//	}
+//	public void setThoiDiemTra(LocalDateTime  thoiDiemTra) {
+//		this.thoiDiemTra = thoiDiemTra;
+//	}
+	
+	
+	
 	public String getMaSVMuon() {
 		return maSVMuon;
+	}
+	public LocalDateTime getHanTra() {
+		return hanTra;
+	}
+	public void setHanTra(LocalDateTime hanTra) {
+		this.hanTra = hanTra;
 	}
 	public void setMaSVMuon(String maSVMuon) {
 		this.maSVMuon = maSVMuon;

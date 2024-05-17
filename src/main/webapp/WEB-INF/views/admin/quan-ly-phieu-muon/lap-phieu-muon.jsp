@@ -20,18 +20,18 @@
 			
 		
 		
-			<div>
-				<%-- <form:form class="d-flex" style="gap:20px; height:40px" method="GET"
-					action="/QuanLyThietBi/quan-tri/quan-ly-phong/tim-kiem-phong"> --%>
+			<%-- <div>
+				<form:form class="d-flex" style="gap:20px; height:40px" method="GET"
+					action="/QuanLyThietBi/quan-tri/quan-ly-phong/tim-kiem-phong">
 					<input name="inputText" class="form-control"
 						placeholder="Tìm kiếm theo tên phòng..." />
 					
 
 					<button type="submit" class="btn btn-primary" style="width: 165px">Tìm
 						kiếm</button>
-				<%-- </form:form> --%>
+				</form:form>
 
-			</div>
+			</div> --%>
 		</div>
 		<div class="table-container mt-3">
 		
